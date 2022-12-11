@@ -17,6 +17,7 @@
 #include "BlynkEdgent.h"
 int analogpin = A0;
 int val = 0;
+bool MoreThan800 = False, prevMoreThan800 = False;
 const byte relay = D2;
  
 void setup()
@@ -28,13 +29,25 @@ void setup()
 }
  
 void loop() {
-  val = analogRead(analogpin);
+  MoreThan800 = analogRead(analogpin) > 800;
   Serial.print("val =     ");
   Serial.println(val);
   Blynk.virtualWrite(V0, val);
   
-  if (val > 800)
-    digitalWrite(relay, HIGH);
+  if (MoreThan800)
+  {
+    if(prevMoreThan800 == False)
+    {
+      digitalWrite(relay, HIGH);
+      prevMoreThan800 = True;
+    }
+  }
   else
-    digitalWrite(relay, LOW);
+  {
+    if(prevMoreThan800 == True)
+    {
+      digitalWrite(relay, LOW);
+      prevMoreThan800 = False;
+    }
+  }
 }
