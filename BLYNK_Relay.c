@@ -35,19 +35,7 @@ void loop() {
   Blynk.virtualWrite(V0, val);
   
   if (MoreThan800)
-  {
-    if(prevMoreThan800 == False)
-    {
       digitalWrite(relay, HIGH);
-      prevMoreThan800 = True;
-    }
-  }
   else
-  {
-    if(prevMoreThan800 == True)
-    {
       digitalWrite(relay, LOW);
-      prevMoreThan800 = False;
-    }
-  }
 }
